@@ -15,11 +15,11 @@ pipeline {
             steps {
                 sh 'ssh root@centosVM "cat /root/Documents/testfile"'
             }
-        }
+        //}
         //stage("Second step") {
             //steps {
                 //sh 'ssh root@centosVM \'uptime\''
-            }
+            //}
         }
     }
 }
