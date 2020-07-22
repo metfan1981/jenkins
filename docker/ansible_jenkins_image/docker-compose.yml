@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  jenkins:
+    container_name: jenkins_w_ansible
+    image: ansible-jenkins
+    ports: 
+      - "8080:8080"
+    volumes:
+      - /home/jenkins/jenkins_home:/var/jenkins_home
+    networks:
+      - net
+
+networks:
+  net:
+
