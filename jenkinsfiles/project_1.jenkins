@@ -1,5 +1,7 @@
 pipeline {
-    agent none
+    agent {
+        label 'aws'
+    }    
     triggers { pollSCM('* * * * *') }
     options {
         timestamps()
@@ -7,9 +9,6 @@ pipeline {
 
     stages {
         stage("Build Image") {
-            agent { 
-                label 'aws'
-            }
             steps {
                 dir ('docker/Dockerfile') {
                 	sh "docker build -t metfan1981/jenkins-image:$BUILD_ID . "
@@ -17,9 +16,6 @@ pipeline {
             }
         }
         stage("AWS Deploy") {
-            agent { 
-                label 'aws'
-            }
             steps {
                 dir ('docker/Dockerfile/compose/') {
                 	sh 'envsubst < "template.yml" > "docker-compose.yml" && docker-compose up -d'
@@ -28,9 +24,6 @@ pipeline {
         }
     }
     post {
-        agent { 
-            label 'aws'
-        }
         success {
             withCredentials([usernamePassword(credentialsId: 'dockerhub_user', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             sh '''
