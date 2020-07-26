@@ -17,7 +17,7 @@ pipeline {
         }
         stage("AWS Deploy") {
             steps {
-                dir ('docker/Dockerfile/compose/') {
+                dir ('docker/Dockerfile/compose') {
                 	sh 'envsubst < "template.yml" > "docker-compose.yml" && docker-compose up -d'
                 }
             }
