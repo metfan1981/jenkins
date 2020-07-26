@@ -5,8 +5,9 @@ services:
     image: metfan1981/jenkins-image:${BUILD_ID}
     ports:
       - "8080:80"
-    env_file:
-      - "env"
+    environment:
+      - WEB_MSG: Jenkins Build URL is $BUILD_URL
+      - WEB_MSG_2: Build ID is $BUILD_ID
     networks:
       - front-net
     volumes: 
