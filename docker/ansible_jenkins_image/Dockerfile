@@ -8,3 +8,5 @@ RUN apt update -y && \
 COPY id_rsa /tmp
 COPY ansible.cfg /etc/ansible/
 COPY hosts /etc/ansible/
+
+USER jenkins
