@@ -10,10 +10,10 @@ services:
     networks:
       - front-net
     volumes: 
-      - html-pages:/var/www/html
+      - jenkins_$BUILD_ID:/var/www/html
 
 networks:
   front-net:
 
 volumes: 
-  html-pages: 
+  jenkins_$BUILD_ID: 
