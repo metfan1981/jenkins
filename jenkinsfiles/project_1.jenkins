@@ -1,0 +1,37 @@
+pipeline {
+    agent none
+    triggers { pollSCM('* * * * *') }
+    options {
+        timestamps()
+    }
+
+    stages {
+        stage("Build Image") {
+            agent { 
+                label 'centos'
+            }
+            steps {
+                dir ('docker/Dockerfile') {
+                	sh "docker build -t metfan1981/jenkins-image:$BUILD_ID . "
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_user', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh "docker login -u $USERNAME -p $PASSWORD"
+                }
+            }
+        }
+        stage("Push Image") {
+            agent { 
+                label 'centos'
+            }
+            steps {
+                sh "docker push metfan1981/jenkins-image:$BUILD_ID"
+            }
+        stage("AWS Deploy") {
+            agent { 
+                label 'aws'
+            }
+            steps {
+                sh 'docker run -d --rm --name jenkins-image_$BUILD_ID -p 8080:80 -e WEB_MSG="Jenkins Build URL is $BUILD_URL" -v jenkins_build_$BUILD_ID_volume:/var/www/html metfan1981/jenkins-image:$BUILD_ID'
+            }
+        }
+    }
+}
