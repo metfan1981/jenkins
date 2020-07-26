@@ -34,6 +34,7 @@ pipeline {
             steps {
                 dir ('docker/Dockerfile/compose/') {
                 	sh "docker-compose up -d"
+                }
             }
         }
     }
