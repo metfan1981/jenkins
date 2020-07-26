@@ -14,17 +14,6 @@ pipeline {
                 dir ('docker/Dockerfile') {
                 	sh "docker build -t metfan1981/jenkins-image:$BUILD_ID . "
                 }
-                withCredentials([usernamePassword(credentialsId: 'dockerhub_user', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh "docker login -u $USERNAME -p $PASSWORD"
-                }
-            }
-        }
-        stage("Push Image") {
-            agent { 
-                label 'aws'
-            }
-            steps {
-                sh "docker push metfan1981/jenkins-image:$BUILD_ID"
             }
         }
         stage("AWS Deploy") {
@@ -39,8 +28,16 @@ pipeline {
         }
     }
     post {
+        agent { 
+            label 'aws'
+        }
         success {
-            echo "Check results on http:[Agent_IP]:8080"
+            withCredentials([usernamePassword(credentialsId: 'dockerhub_user', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            sh '''
+                docker login -u $USERNAME -p $PASSWORD
+                docker push metfan1981/jenkins-image:$BUILD_ID                
+            '''
+            }
         }
     }    
 }
