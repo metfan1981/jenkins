@@ -1,0 +1,19 @@
+version: "2"
+
+services:
+  web:
+    image: metfan1981/jenkins-image:$BUILD_ID
+    ports:
+      - "8080:80"
+    env_file:
+      - "env"
+    networks:
+      - front-net
+    volumes: 
+      - html-pages:/var/www/html
+
+networks:
+  front-net:
+
+volumes: 
+  html-pages: 
