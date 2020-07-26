@@ -12,7 +12,7 @@ pipeline {
             }
             steps {
                 dir ('docker/Dockerfile') {
-                	sh "docker build --no-cache -t metfan1981/jenkins-image:$BUILD_ID . "
+                	sh "docker build -t metfan1981/jenkins-image:$BUILD_ID . "
                 }
                 withCredentials([usernamePassword(credentialsId: 'dockerhub_user', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh "docker login -u $USERNAME -p $PASSWORD"
