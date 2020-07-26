@@ -32,7 +32,8 @@ pipeline {
                 label 'aws'
             }
             steps {
-                sh 'docker run -d --rm --name jenkins-image_$BUILD_ID -p 8000:80 -e WEB_MSG="Jenkins Build URL is $BUILD_URL" -v jenkins_build_$BUILD_ID_volume:/var/www/html metfan1981/jenkins-image:$BUILD_ID'
+                dir ('docker/Dockerfile/compose/') {
+                	sh "docker-compose up -d"
             }
         }
     }
