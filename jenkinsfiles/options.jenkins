@@ -5,18 +5,15 @@ properties([disableConcurrentBuilds()])
 pipeline {
     agent { 
         label 'master'
-        }
-    triggers { pollSCM('* * * * *') }        
+        }       
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
         timestamps()
     }
     stages {
-        stage("create docker image") {
+        stage("1st stage") {
             steps {
-                echo " ============== start building image =================="
-                dir ('docker/toolbox') {
-                	sh "docker build -t jentest ."
+                	sh 'echo "1st stage"'
                 }
             }
         }
