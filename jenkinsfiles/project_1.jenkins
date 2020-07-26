@@ -37,10 +37,10 @@ pipeline {
                 }
             }
         }
-        post {
-            success {
-                echo "Check results on http:[Agent_IP]:8080"
-            }
-        }
     }
+    post {
+        success {
+            echo "Check results on http:[Agent_IP]:8080"
+        }
+    }    
 }
