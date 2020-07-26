@@ -10,5 +10,6 @@ COPY index.php /var/www/html
 EXPOSE 80
 
 ENV WEB_MSG Docker container Website welcomes!
+ENV WEB_MSG_2 Additional info here..
 
 CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND"]
