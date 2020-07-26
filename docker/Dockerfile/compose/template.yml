@@ -6,8 +6,8 @@ services:
     ports:
       - "8080:80"
     environment:
-      - WEB_MSG: Jenkins Build URL is $BUILD_URL
-      - WEB_MSG_2: Build ID is $BUILD_ID
+      - WEB_MSG=Jenkins Build URL is $BUILD_URL
+      - WEB_MSG_2=Build ID is $BUILD_ID
     networks:
       - front-net
     volumes: 
