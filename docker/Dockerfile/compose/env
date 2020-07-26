@@ -1,2 +1,3 @@
 COMPOSE_PROJECT_NAME=lamp
 WEB_MSG=Jenkins Build URL is $BUILD_URL
+WEB_MSG_2=Build ID is $BUILD_ID

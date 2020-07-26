@@ -33,11 +33,13 @@ pipeline {
             }
             steps {
                 dir ('docker/Dockerfile/compose/') {
-                	sh '''
-                        pwd
-                        ls -la
-                    '''
+                	sh "docker-compose up -d"
                 }
+            }
+        }
+        post {
+            success {
+                echo "Check results on http:[Agent_IP]:8080"
             }
         }
     }
